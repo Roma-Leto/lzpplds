@@ -20,6 +20,7 @@ DEBUG = int(os.getenv("DEBUG"))
 
 ALLOWED_HOSTS = [
     'localhost',
+    '127.0.0.1',
     '192.168.1.2:8002',
     os.getenv("HOST1"),
     os.getenv("HOST2"),
@@ -123,7 +124,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static/'
 STATICFILES_DIRS = [
-    BASE_DIR / 'static'
+    # BASE_DIR / 'static'
 ]
 
 # Default primary key field type
