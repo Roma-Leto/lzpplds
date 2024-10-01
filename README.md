@@ -1,5 +1,5 @@
 <h1 style="text-align: center">Dating App</h1>
-<h2 style="text-align: center">Пример проекта для Django. Cайта знакомств.</h2>
+<h2 style="text-align: center">Пример проекта для Django. Cайт знакомств.</h2>
  
 ### Функции:
 - Регистрация пользователя
@@ -10,7 +10,7 @@
 ### Старт
 Установить зависимости pip:
 ```bash
-pip install -r req.txt
+pip install -r requirement.txt
 ```
 Создать секретный ключ.
 ```bash

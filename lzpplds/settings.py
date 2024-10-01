@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'lzpplapp.apps.LzpplappConfig',
     'django_extensions',    # shell_plus
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -117,3 +118,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Customizing authentication in Django
+# https://docs.djangoproject.com/en/5.1/topics/auth/customizing/#extending-the-existing-user-model
+
+AUTH_USER_MODEL = "users.User"
