@@ -1,0 +1,31 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/standart.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/mobile.css' %}" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Title{% endblock title %}</title>
+    {% block style %}
+    {% endblock style %}
+</head>
+<body>
+<ul class="topnav">
+  <li><a class="active" href="{% url 'home_page' %}">LP</a></li>
+  <li><a href="#">Поиск человека</a></li>
+  <li><a href="#">Чаты</a></li>
+  <li><a href="#">О проекте</a></li>
+  <li class="right"><a href="#">Вход</a></li>
+  <li class="right"><a href="#">Регистрация</a></li>
+</ul>
+
+    {% block content %}
+    {% endblock content %}
+
+<div class="footer">
+  <p>Footer</p>
+</div>
+</body>
+</html>
