@@ -18,7 +18,12 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.getenv("DEBUG"))
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'localhost',
+    '192.168.1.2:8002',
+    os.getenv("HOST1"),
+    os.getenv("HOST2"),
+]
 
 
 # Application definition
@@ -72,8 +77,11 @@ WSGI_APPLICATION = 'lzpplds.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': os.getenv('ENGINE'),
+        'NAME': os.getenv('NAME'),
+        'USER': os.getenv('USER'),
+        'PASSWORD': os.getenv('PASSWORD'),
+        'HOST': os.getenv('HOST'),
     }
 }
 
@@ -112,7 +120,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
