@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="login_field">
+        <p>Логин пользователя - <b>{{ user.username }}</b></p>
+        <p>
+            {% if user.photo.url is not None %}
+                <img alt="{{ user.photo.name }}"
+                     class="picture"
+                     src="{{ user.photo.url }}" width="400">
+            {% else %}
+                НЕТ ФОТО
+            {% endif %}
+        </p>
+        <p>Имя - <b>{{ user.first_name }}</b></p>
+        <p>Фамилия - <b>{{ user.last_name }}</b></p>
+        <p>Дата последнего входа - <b>{{ user.last_login }}</b></p>
+        <p>Email - <b>{{ user.email }}</b></p>
+        <p>Дата регистрации - <b>{{ user.date_joined }}</b></p>
+        <p>Дата рождения - <b>{{ user.date_of_birth }}</b></p>
+        <p>О себе: <b>{{ user.about_me }}</b></p>
+        <p>Пол: <b> {% if user.sex == 'male' %}
+            {{ user.SEX_CHOICES.0.1 }}
+        {% else %}
+            {{ user.SEX_CHOICES.1.1 }}
+        {% endif %}</b></p>
+        <p>Город: <b>{{ user.city }}</b></p>
+        {#        {% endfor %}#}
+    </div>
+    <p><a href="#">Изменить данные профиля</a></p>
+{% endblock %}

@@ -53,3 +53,10 @@ div.intro {
   text-align: center;
   color: lightgray;
 }
+
+.login_field {
+  top:180px;
+  min-height:110px;
+  z-index:18;
+  text-align: center;
+}

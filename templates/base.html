@@ -4,8 +4,10 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="{% static 'css/standard.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'css/mobile.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/standard.css' %}"
+          type="text/css">
+    <link rel="stylesheet" href="{% static 'css/mobile.css' %}"
+          type="text/css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Title{% endblock title %}</title>
     {% block style %}
@@ -13,19 +15,29 @@
 </head>
 <body>
 <ul class="topnav">
-  <li><a class="active" href="{% url 'home_page' %}">LP</a></li>
-  <li><a href="#">Поиск человека</a></li>
-  <li><a href="#">Чаты</a></li>
-  <li><a href="#">О проекте</a></li>
-  <li class="right"><a href="#">Вход</a></li>
-  <li class="right"><a href="#">Регистрация</a></li>
+    <li><a class="active" href="{% url 'index' %}">LP</a></li>
+    <li><a href="#">Поиск человека</a></li>
+    <li><a href="#">Чаты</a></li>
+    <li><a href="#">О проекте</a></li>
+
+
+    {% if user.is_authenticated %}
+        <li class="right"><a href="{% url 'users:logout' %}">Выход</a></li>
+        <li class="right"><a
+                href="{% url 'users:profile' pk=user.id %}">{{ user.username }}</a>
+        </li>
+    {% else %}
+        <li class="right"><a href="{% url 'users:login' %}">Вход</a></li>
+        <li class="right"><a href="{% url 'users:register' %}">Регистрация</a>
+        </li>
+    {% endif %}
 </ul>
 
-    {% block content %}
-    {% endblock content %}
+{% block content %}
+{% endblock content %}
 
 <div class="footer">
-  <p>Footer</p>
+    <p>Footer</p>
 </div>
 </body>
 </html>

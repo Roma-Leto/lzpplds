@@ -1,5 +1,8 @@
+from django.shortcuts import render
 from django.views.generic import TemplateView
+
+from users.models import User
 
 
 class HomePage(TemplateView):
-    template_name = 'lzpplapp/home_page.html'
+    template_name = 'lzpplapp/index.html'

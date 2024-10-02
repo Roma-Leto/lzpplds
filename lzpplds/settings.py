@@ -2,8 +2,6 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 
-
-
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -74,9 +72,10 @@ WSGI_APPLICATION = 'lzpplds.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-
+# DATABASES
 try:
     import config
+
     DATABASES = config.get_database(BASE_DIR)
 except (ImportError, ModuleNotFoundError):
     DATABASES = {
@@ -135,3 +134,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # https://docs.djangoproject.com/en/5.1/topics/auth/customizing/#extending-the-existing-user-model
 
 AUTH_USER_MODEL = "users.User"
+
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'users:login-done'
+
+MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/media/'
