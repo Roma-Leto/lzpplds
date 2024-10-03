@@ -1,12 +1,16 @@
+from datetime import datetime
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, TemplateView, UpdateView, \
     DetailView
 
+from lzpplapp.forms import FindUsers
 from users.forms import UserLoginForm, RegisterUserForm, EditProfileUserForm
 from users.models import User
 
@@ -42,10 +46,20 @@ class LoginDoneView(TemplateView):
 def profile_user(request, username: str):
     user = User.objects.filter(username=username)
     context = {
-        'user_filter': user,
+        'users': user,
         'title': 'Профиль'
     }
     return render(request, "users/user_detail.html", context)
+
+
+@login_required  # Будет доступно только авторизованным пользователям
+def profile_find_user(request, username: str):
+    user = User.objects.filter(username=username)
+    context = {
+        'users': user,
+        'title': 'Профиль'
+    }
+    return render(request, "users/user_find_detail.html", context)
 
 
 class EditProfileUserView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
@@ -54,7 +68,6 @@ class EditProfileUserView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     form_class = EditProfileUserForm
     # success_url = "users/user_detail.html"
     success_message = 'Данные профиля пользователя изменены.'
-
 
     def setup(self, request, *args, **kwargs):
         """
@@ -76,3 +89,5 @@ class EditProfileUserView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('users:profile', args=[self.username])
+
+# Find users

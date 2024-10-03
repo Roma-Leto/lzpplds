@@ -12,4 +12,5 @@ urlpatterns = [
     path('register/', RegisterUser.as_view(), name='register'),
     path('profile/edit/', EditProfileUserView.as_view(), name='profile_edit'),
     path('profile/<str:username>/', profile_user, name='profile'),
+    path('find-profile/<str:username>/', profile_find_user, name='find_profile'),
 ]

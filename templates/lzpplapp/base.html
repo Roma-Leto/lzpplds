@@ -13,20 +13,20 @@
     {% block style %}
     {% endblock style %}
 </head>
+
 <body>
 <ul class="topnav">
     <li><a class="active" href="{% url 'index' %}">LP</a></li>
-    <li><a href="#">Поиск человека</a></li>
-    <li><a href="#">Чаты</a></li>
+    <li><a href="{% url 'find-users' %}">Поиск человека</a></li>
+    <li><a href="#">Мои чаты</a></li>
     <li><a href="#">О проекте</a></li>
-
 
     {% if user.is_authenticated %}
         <li class="right"><a href="{% url 'users:logout' %}">Выход</a></li>
         {% block user_menu %}
-        <li class="right">
-            <a href="{% url 'users:profile' username=user.username %}">{{ user.username }}</a>
-        </li>
+            <li class="right">
+                <a href="{% url 'users:profile' username=user.username %}">{{ user.username }}</a>
+            </li>
         {% endblock user_menu %}
     {% else %}
         <li class="right"><a href="{% url 'users:login' %}">Вход</a></li>
@@ -39,7 +39,7 @@
 {% endblock content %}
 
 <div class="footer">
-    <p>Footer</p>
+    <p>&copy; Leto Roman. 2024</p>
 </div>
 </body>
 </html>

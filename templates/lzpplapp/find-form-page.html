@@ -1,0 +1,24 @@
+{% extends 'lzpplapp/base.html' %}
+
+{% block content %}
+    <div class="login_field">
+        {% if user.is_authenticated %}
+            <h1>Поиск</h1>
+            <p style="align-content: center">
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Искать</button>
+            </form>
+            <p style="margin-left: 20px">
+                {% for user in users %}
+                    <br>
+                    <a href="{% url 'users:find_profile' username=user.username %}">
+                        <b>{{ user.username }}</b>
+                    </a>
+                    Возраст: {{ old.pop }}
+                {% endfor %}
+            </p>
+        {% endif %}
+    </div>
+{% endblock content %}

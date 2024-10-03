@@ -2,7 +2,10 @@
 
 {% block user_menu %}
     <li class="right">
-        <a href="{% url 'users:profile_edit' %}">Редактировать</a>
+        <a href="#">Поговорить</a>
+    </li>
+    <li class="right">
+        <a href="{% url 'users:profile' username=user.username %}">{{ user.username }}</a>
     </li>
 {% endblock user_menu %}
 
