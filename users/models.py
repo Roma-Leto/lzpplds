@@ -8,7 +8,7 @@ class User(AbstractUser):
         blank=True,
         null=True,
         verbose_name="Фотография",
-        default='users/photos/default_user.jpg')
+        default='users/photos/default_user.png')
     date_of_birth = models.DateField(verbose_name="Дата рождения")
     about_me = models.CharField(max_length=1000,
                                 blank=True,

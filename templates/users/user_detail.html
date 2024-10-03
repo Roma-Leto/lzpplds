@@ -1,5 +1,13 @@
 {% extends 'base.html' %}
 
+
+{% block user_menu %}
+    <li class="right">
+        <a href="{% url 'users:profile_edit' %}">Редактировать</a>
+    </li>
+{% endblock user_menu %}
+
+
 {% block content %}
     <div class="login_field">
         <p>Логин пользователя - <b>{{ user.username }}</b></p>

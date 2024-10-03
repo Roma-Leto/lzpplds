@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div>
+    <div class="login_field">
         <p> Изменение данных {{ user.username }}</p>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}

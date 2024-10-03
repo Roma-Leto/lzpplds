@@ -23,9 +23,11 @@
 
     {% if user.is_authenticated %}
         <li class="right"><a href="{% url 'users:logout' %}">Выход</a></li>
-        <li class="right"><a
-                href="{% url 'users:profile' pk=user.id %}">{{ user.username }}</a>
+        {% block user_menu %}
+        <li class="right">
+            <a href="{% url 'users:profile' username=user.username %}">{{ user.username }}</a>
         </li>
+        {% endblock user_menu %}
     {% else %}
         <li class="right"><a href="{% url 'users:login' %}">Вход</a></li>
         <li class="right"><a href="{% url 'users:register' %}">Регистрация</a>
