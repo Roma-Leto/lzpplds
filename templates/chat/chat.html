@@ -1,0 +1,90 @@
+{% extends 'lzpplapp/base.html' %}
+{% block content %}
+    <h2>Чат с {{ recipient.username }}</h2>
+
+    {#    <form method="POST">#}
+    {#        {% csrf_token %}#}
+    {#        {{ form.as_p }}#}
+    {#        <button type="submit">Отправить</button>#}
+    {#    </form>#}
+    <div class="chat__item__container" id="id_chat_item_container"
+         style="font-size: 20px;
+                max-height: 400px;
+                overflow-y: scroll;">
+
+
+        {% for message in messages %}
+
+            <b>{{ message.sender.username }}</b>: {{ message.content }}
+
+                <span class="timestamp" style="color: #8C8C8C; font-size: 10px">{{ message.timestamp|date }}</span>
+                <span class="timestamp" style="color: dimgray">{{ message.timestamp|time }}</span>
+            <br>
+        {% endfor %}
+
+
+
+    </div>
+    <br/>
+        <input type="text" id="id_message_send_input"/>
+        <button type="submit" id="id_message_send_button">Send Message</button>
+        <br/>
+        <br/>
+
+
+    <script>
+
+    function scrollToBottom(){
+        let objDiv = document.getElementById("id_chat_item_container");
+        objDiv.scrollTop = objDiv.scrollHeight;
+    }
+
+    scrollToBottom();
+
+        const chatSocket = new WebSocket(
+            'ws://' + window.location.host + '/' + {{ recipient.id }} +'/'
+        );
+        console.log(chatSocket);
+chatSocket.onopen = function (e) {
+        console.log("The connection was setup successfully !");
+      };
+      chatSocket.onclose = function (e) {
+        console.log("Something unexpected happened !");
+      };
+      document.querySelector("#id_message_send_input").focus();
+      document.querySelector("#id_message_send_input").onkeyup = function (e) {
+        if (e.keyCode == 13) {
+          document.querySelector("#id_message_send_button").click();
+        }
+      };
+      document.querySelector("#id_message_send_button").onclick = function (e) {
+        var message = document.querySelector(
+          "#id_message_send_input"
+        ).value;
+        chatSocket.send(JSON.stringify({ message : message, username : "{{request.user.username}}"}));
+      };
+      chatSocket.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        var div = document.createElement("div");
+        const message = document.createElement('li');
+        message.classList.add('received');
+        div.innerHTML = '<b>' + data.sender + '</b>' + " : " + data.message;
+        document.querySelector("#id_message_send_input").value = "";
+        document.querySelector("#id_chat_item_container").appendChild(div);
+        document.querySelector('div').appendChild(message);
+
+        scrollToBottom();
+
+      };
+
+      {#chatSocket.onmessage = function (e) {#}
+      {#      const data = JSON.parse(e.data);#}
+      {#      const message = document.createElement('li');#}
+      {#      message.classList.add('received');#}
+      {#      message.innerHTML = data.username + " : " + data.message;#}
+      {#    document.querySelector("#id_chat_item_container").appendChild(message);};#}
+
+    </script>
+
+
+{% endblock %}

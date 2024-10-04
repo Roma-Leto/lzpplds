@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
+from django.http import HttpResponseNotFound
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, TemplateView, UpdateView, \
@@ -44,7 +45,10 @@ class LoginDoneView(TemplateView):
 
 @login_required  # Будет доступно только авторизованным пользователям
 def profile_user(request, username: str):
-    user = User.objects.filter(username=username)
+    try:
+        user = User.objects.filter(username=username)
+    except User.DoesNotExist:
+        return HttpResponseNotFound('Пользователь не найден')
     context = {
         'users': user,
         'title': 'Профиль'
@@ -54,9 +58,14 @@ def profile_user(request, username: str):
 
 @login_required  # Будет доступно только авторизованным пользователям
 def profile_find_user(request, username: str):
-    user = User.objects.filter(username=username)
+    try:
+        users = User.objects.filter(username=username)
+        user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        return HttpResponseNotFound('Пользователь не найден')
     context = {
-        'users': user,
+        'users': users,
+        'user': user,
         'title': 'Профиль'
     }
     return render(request, "users/user_find_detail.html", context)
@@ -66,28 +75,42 @@ class EditProfileUserView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = User
     template_name = 'users/profile_edit.html'
     form_class = EditProfileUserForm
-    # success_url = "users/user_detail.html"
     success_message = 'Данные профиля пользователя изменены.'
 
+    # def setup(self, request, *args, **kwargs):
+    #     """
+    #     Функция извлечения из модели текущего пользователя
+    #     ключа пользователя.
+    #     """
+    #     self.user_id = request.user.pk
+    #     self.username = request.user.username
+    #     return super().setup(request, *args, **kwargs)
+
+    # def get_object(self, queryset=None):
+    #     """
+    #     Функция извлечения исправляемой записи.
+    #     """
+    #     if not queryset:
+    #         queryset = self.get_queryset()
+    #     return get_object_or_404(queryset, pk=self.user_id,
+    #                              username=self.username)
+    #
+    # def get_success_url(self):
+    #     return reverse('users:profile', args=[self.username])
+
+# class EditProfileUserView(SuccessMessageMixin, LoginRequiredMixin,
+#                           UpdateView):
+#     model = User
+#     template_name = 'users/profile_edit.html'
+#     form_class = EditProfileUserForm
+#     success_message = 'Данные профиля пользователя изменены.'
+#
     def setup(self, request, *args, **kwargs):
-        """
-        Функция извлечения из модели текущего пользователя
-        ключа пользователя.
-        """
-        self.user_id = request.user.pk
-        self.username = request.user.username
-        return super().setup(request, *args, **kwargs)
+        super().setup(request, *args, **kwargs)
+        self.user = request.user
 
     def get_object(self, queryset=None):
-        """
-        Функция извлечения исправляемой записи.
-        """
-        if not queryset:
-            queryset = self.get_queryset()
-        return get_object_or_404(queryset, pk=self.user_id,
-                                 username=self.username)
+        return self.user
 
     def get_success_url(self):
-        return reverse('users:profile', args=[self.username])
-
-# Find users
+        return reverse('users:profile', args=[self.user.username])

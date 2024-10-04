@@ -19,7 +19,7 @@
     <li><a class="active" href="{% url 'index' %}">LP</a></li>
     <li><a href="{% url 'find-users' %}">Поиск человека</a></li>
     <li><a href="#">Мои чаты</a></li>
-    <li><a href="#">О проекте</a></li>
+{#    <li><a href="#">О проекте</a></li>#}
 
     {% if user.is_authenticated %}
         <li class="right"><a href="{% url 'users:logout' %}">Выход</a></li>

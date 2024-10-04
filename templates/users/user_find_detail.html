@@ -2,7 +2,7 @@
 
 {% block user_menu %}
     <li class="right">
-        <a href="#">Поговорить</a>
+        <a href="{% url 'chat:chat' recipient_id=user.id %}">Чат с {{ user.username }}</a>
     </li>
     <li class="right">
         <a href="{% url 'users:profile' username=user.username %}">{{ user.username }}</a>
@@ -29,7 +29,7 @@
             <p>Имя - <b>{{ user.first_name }}</b></p>
             <p>Фамилия - <b>{{ user.last_name }}</b></p>
             <p>Дата последнего входа - <b>{{ user.last_login }}</b></p>
-            <p>Email - <b>{{ user.email }}</b></p>
+            {#            <p>Email - <b>{{ user.email }}</b></p>#}
             <p>Дата регистрации - <b>{{ user.date_joined }}</b></p>
             <p>Дата рождения - <b>{{ user.date_of_birth }}</b></p>
             <p>О себе: <b>{{ user.about_me }}</b></p>

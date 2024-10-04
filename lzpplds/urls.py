@@ -9,6 +9,7 @@ urlpatterns = [
     path('', HomePage.as_view(), name="index"),
     path('admin/', admin.site.urls),
     path('accounts/', include('users.urls', namespace='users')),
+    path('chat/', include('chat.urls', namespace='chat')),
     path('find/', find_users, name='find-users'),
 ]
 

@@ -17,7 +17,6 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = int(os.getenv("DEBUG"))
 
 ALLOWED_HOSTS = [
-    'localhost',
     '127.0.0.1',
     '192.168.1.2',
     os.getenv("HOST1"),
@@ -36,6 +35,9 @@ INSTALLED_APPS = [
     'lzpplapp.apps.LzpplappConfig',
     'django_extensions',  # shell_plus
     'users',
+    'daphne',
+    'channels',
+    'chat',
 ]
 
 MIDDLEWARE = [
@@ -68,6 +70,13 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'lzpplds.wsgi.application'
+ASGI_APPLICATION = 'lzpplds.asgi.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
