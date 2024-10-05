@@ -42,7 +42,7 @@
     scrollToBottom();
 
         const chatSocket = new WebSocket(
-            'ws://' + window.location.host + '/' + {{ recipient.id }} +'/'
+            'wss://' + window.location.host + '/' + {{ recipient.id }} +'/'
         );
         console.log(chatSocket);
 chatSocket.onopen = function (e) {

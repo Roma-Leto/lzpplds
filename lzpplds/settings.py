@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'users',
     'daphne',
     'channels',
+    'sslserver',
     'chat',
 ]
 
