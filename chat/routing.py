@@ -8,5 +8,5 @@ from chat.consumers import ChatConsumer
 
 websocket_urlpatterns = [
     # path("", ChatConsumer.as_asgi()),
-    path('<int:recipient_id>/', ChatConsumer.as_asgi()),
+    path('chat/<int:recipient_id>/', ChatConsumer.as_asgi()),
 ]
